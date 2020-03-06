@@ -1,11 +1,11 @@
-package it.dstech.progettocondiviso;
+package it.dstech.biblioteca;
 
 public class Libro implements Comparable <Libro>{
 
 	private String titolo;
 	private String autore;
 	private String genere;
-	private boolean prenotabilit√†;
+	private boolean prenotabilit‡;
 	private int numeroPrenotazioni;
 
 	
@@ -21,15 +21,24 @@ public class Libro implements Comparable <Libro>{
 		return titolo;
 	}
 
+	public void cambiaPrenotazione() {
+		if(prenotabilit‡) {
+			this.prenotabilit‡=false;
+			aumentaPrenotazioni();
+		} else {
+			this.prenotabilit‡=true;
+		}
+	}
 
-
-
-
+	
+	public void aumentaPrenotazioni() {
+		this.numeroPrenotazioni++;
+	}
+	
+	
 	public void setTitolo(String titolo) {
 		this.titolo = titolo;
 	}
-
-
 
 
 
@@ -56,20 +65,20 @@ public class Libro implements Comparable <Libro>{
 	}
 
 
-	public boolean isPrenotabilit√†() {
-		return prenotabilit√†;
+	public boolean isPrenotabilit‡() {
+		return prenotabilit‡;
 	}
 
 
-	public void setPrenotabilit√†(boolean prenotabilit√†) {
-		this.prenotabilit√† = prenotabilit√†;
+	public void setPrenotabilit‡(boolean prenotabilit‡) {
+		this.prenotabilit‡ = prenotabilit‡;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Libro [titolo=" + titolo + ", autore=" + autore + ", genere=" + genere + ", prenotabilit√†="
-				+ prenotabilit√† + "]";
+		return "Libro [titolo=" + titolo + ", autore=" + autore + ", genere=" + genere + ", prenotabilit‡="
+				+ prenotabilit‡ + "]";
 	}
 
 
@@ -84,6 +93,7 @@ public class Libro implements Comparable <Libro>{
 	}
 
 
+	
 	public int getNumeroPrenotazioni() {
 		return numeroPrenotazioni;
 	}
