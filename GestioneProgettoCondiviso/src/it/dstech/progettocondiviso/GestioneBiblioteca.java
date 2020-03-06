@@ -12,16 +12,15 @@ public class GestioneBiblioteca {
 	
 	
 	
-	private static Scaffale creaScafale() {
-		List<Libro> listaBrani=new ArrayList<>();
-		System.out.println("Inserisci il nome");
+	private static void creaScafale() {
+		List<Libro> listaLibri=new ArrayList<>();
+		System.out.println("Inserisci il genere");
 		String genere = scanner.nextLine();
 		Scaffale p = new	Scaffale( genere);
-		return p;
 		
 	}
 	
-	private static Libro creaLibro(Scaffale scaffale) {
+	private static void creaLibro(Scaffale scaffale) {
 		
 		System.out.println("Inserisci il nome");
 		String titolo = scanner.nextLine();
@@ -32,7 +31,7 @@ public class GestioneBiblioteca {
 		
 		Libro p = new	Libro( titolo,  autore,  genere);
 		scaffale.aggiungiLibro(p);
-		return p;
+		
 		
 		
 	}
@@ -42,3 +41,5 @@ public class GestioneBiblioteca {
 	
 	
 }
+
+
