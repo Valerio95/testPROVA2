@@ -6,11 +6,11 @@ import java.util.List;
 
 
 public class Scaffale {
-	private String genere;
+	private Genere genere;
 	List<Libro> listaLibri = new ArrayList<>();
 
 
-	public Scaffale( String genere) {
+	public Scaffale( Genere genere) {
 		super();
 		this.listaLibri = new ArrayList<>();
 		this.genere = genere;
@@ -27,12 +27,12 @@ public class Scaffale {
 	}
 
 
-	public String getGenere() {
+	public Genere getGenere() {
 		return genere;
 	}
 
 
-	public void setGenere(String genere) {
+	public void setGenere(Genere genere) {
 		this.genere = genere;
 	}
 
@@ -50,12 +50,12 @@ public class Scaffale {
 			this.getListaLibri().remove(b);
 		return true;
 	}
-	return false;
-
+		return false;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "Scaffali [genere=" + genere + "]";
+		return "Scaffale [genere=" + genere + "]";
 	}
 }
