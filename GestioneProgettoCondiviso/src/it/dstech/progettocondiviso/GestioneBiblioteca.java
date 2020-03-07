@@ -1,6 +1,6 @@
 package it.dstech.biblioteca;
 
-import java.io.File;
+port java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,92 +13,103 @@ import java.util.Scanner;
 
 public class GestioneBiblioteca {
 	static List<Libro> listaLibri=new ArrayList<>();
-	
+
 	static Scanner scanner=new Scanner(System.in);
-	
 	public static void main(String[] args) {
-		try {
+	try {
 		List<Scaffale> listaScaffali= caricaScaffale();
-     
-		while(true){
-			menu();
-		int scelta=scanner.nextInt();
-		
+			while(true){
+		menu();
+		 int scelta=scanner.nextInt();
+		 scanner.nextLine();
 		switch (scelta) {
-		case 1:
-			System.out.println("1. Aggiungi 2. Rimuovi");
-			scelta=scanner.nextInt();
-			scanner.nextLine();
-			if(scelta==1) {
-				aggiungiScaffale();
-			} else {
-				rimuoviScaffale();
+		case 1:System.out.println("1. aggiungi 2. rimuovi");
+		scelta=scanner.nextInt();
+		if(scelta==1) {
+			aggiungiScaffale();
+			}else {
+			rimuoviScaffale();
 			}
 			break;
-		case 2:
-			aggiungiLibro();
+case 2:
+	aggiungiLibro();
+	
+				
+			
 			break;
-		case 3:
-			aggiornaLibro();
-			break;
-		case 6:
-			stampaScaffali();
-			stampaLibri();
-			break;
-		
+			case 3:
+				aggiornaLibro();
+				break;
+			case 6:
+				stampaScaffali();
+				stampaLibri();
+				break;
 		default:
 			break;
-		} 
-	}
-		catch (IOException | ClassNotFoundException e) {
+		}
+			
+	}}
+			catch (IOException | ClassNotFoundException e) {
 				e.printStackTrace();
 				}
-}
+	}
+	
+	
 	
 	public static void aggiungiScaffale() {
+		List<Scaffale> listaScaffali=new ArrayList<>();
 		System.out.println("Inserisci il genere");
-		String genere = scanner.nextLine();
+		System.out.println("HORROR,\r\n" + 
+				"FANTASY,\r\n" + 
+				"STORICO,\r\n" + 
+				"FANTASCIENZA,\r\n" + 
+				"THRILLER,\r\n" + 
+				"COMMEDIA,\r\n" + 
+				"GIALLO;");
+		String nuovoGenere= scanner.nextLine();
+		Genere genere= Genere.valueOf(nuovoGenere);
 		Scaffale p = new	Scaffale( genere);
 		listaScaffali.add(p);
 	}
 	
-	
 	public static void aggiungiLibro() {
-		
+		List<Scaffale> listaScaffali=new ArrayList<>();
 		for(int i=0;i<listaScaffali.size();i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
 		}
+		System.out.println("a quale scaffale vuoi aggiungere il libro");
+		int scelta= scanner.nextInt();
+		listaScaffali.get(scelta);
+		System.out.println("dammi l'indice dello scaffale a cui vuoi aggiungere il");
 		
 		System.out.println("Inserisci il nome");
 		String titolo = scanner.nextLine();
 		System.out.println("Inserisci l autore");
-		String autore = scanner.nextLine();
-		System.out.println("Inserisci il genere");
-		String genere = scanner.nextLine();
-		
-		
+		 String autore = scanner.nextLine();
+		 System.out.println("Inserisci il genere");
+			System.out.println("HORROR,\r\n" + 
+					"FANTASY,\r\n" + 
+					"STORICO,\r\n" + 
+					"FANTASCIENZA,\r\n" + 
+					"THRILLER,\r\n" + 
+					"COMMEDIA,\r\n" + 
+					"GIALLO;");
+			String nuovoGenere= scanner.nextLine();
+			Genere genere= Genere.valueOf(nuovoGenere);
 		
 		Libro p = new	Libro( titolo,  autore,  genere);
-		listaScaffali.get(controlloGenere(genere)).aggiungiLibro(p);	
+		listaScaffali.get(scelta).aggiungiLibro(p);
+		
+		
+		
 	}
-	
-	public static int controlloGenere(String genere){
-		int indiceScaffale=0;
-		int indice=0;
-		for (Scaffale scaffale : listaScaffali) {
-			indice++;
-			if(genere.equals(scaffale.getGenere())) {}
-			indiceScaffale=indice;
-		}
-		return indiceScaffale;
-	}
-	
 	public static void rimuoviScaffale(){
 		boolean condizione= true;
 		while(condizione){
+			List<Scaffale> listaScaffali=new ArrayList<>();
 			int indice=0;
-			System.out.println("Ecco gli scaffali presenti nella lista");
 			for(Scaffale p : listaScaffali) {
+				System.out.println("Ecco i scaffale presenti nella lista");
 				System.out.println(indice+"."+p);	
 				indice++;
 			}
@@ -106,36 +117,34 @@ public class GestioneBiblioteca {
 			int scelta= scanner.nextInt();
 			scanner.nextLine();
 			listaScaffali.remove(scelta);
-			System.out.println("Vuoi rimuovere un altro scaffale?");
+			System.out.println("Vuoi scaffale un altro cliente?");
 			String siNo =  scanner.nextLine();
 			if(siNo.equals("no")) {
 				condizione=false;
 			} 
 		}
 	}
-	
-	
-	public static void menu() {
+	private static void menu() {
 		System.out.println("1. Inserisci o rimuovi uno scaffale");
 		System.out.println("2. Inserisci o rimuovi un libro");
-		System.out.println("3. Aggiorna libro");
+		System.out.println("3. aggiorna libri");
 		System.out.println("4. ");
-		System.out.println("5. ");
-		System.out.println("6. ");
-		System.out.println("7. ");
-		System.out.println("8. ");
+		System.out.println("5. Elenca i 5 prodotti più costosi e i 5 più economici");
+		System.out.println("6. Elenca i primi 5 clienti in ordine di spesa effettuata");
+		System.out.println("7. Elenca i 3 clienti che hanno speso meno");
+		System.out.println("8. Elenca i 3 prodotti più venduti e i 3 meno venduti");
 		System.out.println("9. Stampa e salva");
 		System.out.println("0. Esci");
 	}
-	
-	
 	public static void stampaScaffali() {
+		List<Scaffale> listaScaffali=new ArrayList<>();
 		for(int i=0;i<listaScaffali.size();i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
-		}	
+		}
+		
 	}
-	
 	public static void stampaLibri() {
+		List<Scaffale> listaScaffali=new ArrayList<>();
 		for(int i=0;i<listaScaffali.size();i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
 		}
@@ -143,8 +152,8 @@ public class GestioneBiblioteca {
 		int scelta=scanner.nextInt();
 		System.out.println(listaScaffali.get(scelta).getListaLibri());
 	}
-	
 	public static void aggiornaLibro() {
+		List<Scaffale> listaScaffali=new ArrayList<>();
 		boolean sceltaCorretta= true;
 		System.out.println("Ecco la lista degli scaffali, quale vuoi selezionare?");
 		stampaScaffali();
@@ -167,11 +176,22 @@ public class GestioneBiblioteca {
 					listaScaffali.get(scaffale).getListaLibri().get(libro).setAutore(scanner.nextLine());
 				} else {
 					System.out.println("Inserisci il nuovo genere");
-					listaScaffali.get(scaffale).getListaLibri().get(libro).setGenere(scanner.nextLine());	
+					System.out.println("HORROR,\r\n" + 
+							"FANTASY,\r\n" + 
+							"STORICO,\r\n" + 
+							"FANTASCIENZA,\r\n" + 
+							"THRILLER,\r\n" + 
+							"COMMEDIA,\r\n" + 
+							"GIALLO;");
+					String nuovoGenere= scanner.nextLine();
+					listaScaffali.get(scaffale).getListaLibri().get(libro).setGenere(scanner.nextLine());
+					
+					
 				}
 			}
 		}
-	}
+	
+}
 	
 	private static List<Scaffale> caricaScaffale() throws IOException, ClassNotFoundException {
 		System.out.println("dammi il nome del file");
@@ -196,5 +216,7 @@ public class GestioneBiblioteca {
 	stream.writeObject(c);
 	stream.close();
 }
+
+
 
 }
