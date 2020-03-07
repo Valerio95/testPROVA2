@@ -43,23 +43,26 @@ public class GestioneBiblioteca {
 		listaScaffali.add(p);
 	}
 	
-	public static void aggiungiLibro(Scaffale scaffale) {
+	public static void aggiungiLibro() {
+		
 		for(int i=0;i<listaScaffali.size();i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
 		}
-		System.out.println("");
-		System.out.println("Dammi l'indice dello scaffale a cui vuoi aggiungere il libro");
+		System.out.println("a quale scaffale vuoi aggiungere il libro");
+		int scelta= scanner.nextInt();
+		listaScaffali.get(scelta);
+		System.out.println("dammi l'indice dello scaffale a cui vuoi aggiungere il");
+		
 		System.out.println("Inserisci il nome");
 		String titolo = scanner.nextLine();
 		System.out.println("Inserisci l autore");
-		String autore = scanner.nextLine();
-		System.out.println("Inserisci il genere");
-		String genere = scanner.nextLine();
+		 String autore = scanner.nextLine();
+		 System.out.println("Inserisci il genere");
+		 String genere = scanner.nextLine();
 		
 		Libro p = new	Libro( titolo,  autore,  genere);
-		scaffale.aggiungiLibro(p);
+		listaScaffali.get(scelta).aggiungiLibro(p);	
 	}
-	
 	public static void rimuoviScaffale(){
 		boolean condizione= true;
 		while(condizione){
