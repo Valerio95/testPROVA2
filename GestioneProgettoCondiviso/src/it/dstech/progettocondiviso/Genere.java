@@ -1,5 +1,11 @@
 package it.dstech.progettocondiviso;
 
-public class Genere {
-
+public enum Genere {
+HORROR,
+FANTASY,
+STORICO,
+FANTASCIENZA,
+THRILLER,
+COMMEDIA,
+GIALLO;
 }
