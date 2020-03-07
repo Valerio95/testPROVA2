@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,46 +17,47 @@ public class GestioneBiblioteca {
 
 	static Scanner scanner=new Scanner(System.in);
 	public static void main(String[] args) {
-	try {
-		List<Scaffale> listaScaffali= caricaScaffale();
-			while(true){
-		menu();
-		 int scelta=scanner.nextInt();
-		 scanner.nextLine();
-		switch (scelta) {
-		case 1:System.out.println("1. aggiungi 2. rimuovi");
-		scelta=scanner.nextInt();
-		if(scelta==1) {
-			aggiungiScaffale();
-			}else {
-			rimuoviScaffale();
-			}
-			break;
-case 2:
-	aggiungiLibro();
-	
-				
-			
-			break;
-			case 3:
-				aggiornaLibro();
-				break;
-			case 6:
-				stampaScaffali();
-				stampaLibri();
-				break;
-		default:
-			break;
-		}
-			
-	}}
-			catch (IOException | ClassNotFoundException e) {
-				e.printStackTrace();
+		
+		creaNuovoFile();
+		
+		while(true){
+			menu();
+			int scelta=scanner.nextInt();
+			scanner.nextLine();
+			switch (scelta) {
+				case 1:System.out.println("1. Aggiungi 2. Rimuovi");
+					scelta=scanner.nextInt();
+				if(scelta==1) {
+					aggiungiScaffale();
+				} else {
+					rimuoviScaffale();
 				}
+				break;
+				case 2:
+					aggiungiLibro();
+					break;
+				case 3:
+					aggiornaLibro();
+				break;
+				case 4:
+				break;
+				case 6:
+					stampaScaffali();
+				break;
+				case 7:
+					stampaLibri();
+				break;
+				case 8:
+					salvaSuFile();
+				break;
+				default:
+					salvaSuFile();
+				break;
+			} 
+		}
 	}
-	
-	
-	
+			
+
 	public static void aggiungiScaffale() {
 		List<Scaffale> listaScaffali=new ArrayList<>();
 		System.out.println("Inserisci il genere");
@@ -68,7 +70,7 @@ case 2:
 				"GIALLO;");
 		String nuovoGenere= scanner.nextLine();
 		Genere genere= Genere.valueOf(nuovoGenere);
-		Scaffale p = new	Scaffale( genere);
+		Scaffale p = new Scaffale( genere);
 		listaScaffali.add(p);
 	}
 	
@@ -77,31 +79,31 @@ case 2:
 		for(int i=0;i<listaScaffali.size();i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
 		}
-		System.out.println("a quale scaffale vuoi aggiungere il libro");
+		System.out.println("A quale scaffale vuoi aggiungere il libro");
 		int scelta= scanner.nextInt();
 		listaScaffali.get(scelta);
-		System.out.println("dammi l'indice dello scaffale a cui vuoi aggiungere il");
+		System.out.println("Inserisci l'indice dello scaffale a cui vuoi aggiungere il titolo");
 		
 		System.out.println("Inserisci il nome");
 		String titolo = scanner.nextLine();
 		System.out.println("Inserisci l autore");
-		 String autore = scanner.nextLine();
-		 System.out.println("Inserisci il genere");
-			System.out.println("HORROR,\r\n" + 
+		String autore = scanner.nextLine();
+		System.out.println("Inserisci il genere");
+		System.out.println("HORROR,\r\n" + 
 					"FANTASY,\r\n" + 
 					"STORICO,\r\n" + 
 					"FANTASCIENZA,\r\n" + 
 					"THRILLER,\r\n" + 
 					"COMMEDIA,\r\n" + 
 					"GIALLO;");
-			String nuovoGenere= scanner.nextLine();
-			Genere genere= Genere.valueOf(nuovoGenere);
+		String nuovoGenere= scanner.nextLine();
+		Genere genere= Genere.valueOf(nuovoGenere);
 		
 		Libro p = new	Libro( titolo,  autore,  genere);
 		listaScaffali.get(controlloGenere(genere)).aggiungiLibro(p);		
-		
-		
 	}
+	
+	
 	public static void rimuoviScaffale(){
 		boolean condizione= true;
 		while(condizione){
@@ -126,22 +128,23 @@ case 2:
 	private static void menu() {
 		System.out.println("1. Inserisci o rimuovi uno scaffale");
 		System.out.println("2. Inserisci o rimuovi un libro");
-		System.out.println("3. aggiorna libri");
-		System.out.println("4. ");
-		System.out.println("5. Elenca i 5 prodotti più costosi e i 5 più economici");
-		System.out.println("6. Elenca i primi 5 clienti in ordine di spesa effettuata");
-		System.out.println("7. Elenca i 3 clienti che hanno speso meno");
-		System.out.println("8. Elenca i 3 prodotti più venduti e i 3 meno venduti");
-		System.out.println("9. Stampa e salva");
-		System.out.println("0. Esci");
+		System.out.println("3. Aggiorna libri");
+		System.out.println("4. Stampa libri più prenotati");
+		System.out.println("5. Stampa libri meno prenotati");
+		System.out.println("6. Stampa scaffale");
+		System.out.println("7. Stampa libri");
+		System.out.println("8. Salva ");
+		System.out.println("9. Esci");
+		
 	}
 	public static void stampaScaffali() {
 		List<Scaffale> listaScaffali=new ArrayList<>();
 		for(int i=0;i<listaScaffali.size();i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
-		}
-		
+		}	
 	}
+	
+	
 	public static int controlloGenere(Genere genere){
 		List<Scaffale> listaScaffali=new ArrayList<>();
 		int indiceScaffale=0;
@@ -154,15 +157,19 @@ case 2:
 		}
 		return indiceScaffale;
 	}
+	
+	
 	public static void stampaLibri() {
 		List<Scaffale> listaScaffali=new ArrayList<>();
 		for(int i=0;i<listaScaffali.size();i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
 		}
-		System.out.println("dammi l'indice dello scaffale");
+		System.out.println("Dammi l'indice dello scaffale");
 		int scelta=scanner.nextInt();
 		System.out.println(listaScaffali.get(scelta).getListaLibri());
 	}
+	
+	
 	public static void aggiornaLibro() {
 		List<Scaffale> listaScaffali=new ArrayList<>();
 		boolean sceltaCorretta= true;
@@ -195,40 +202,84 @@ case 2:
 							"COMMEDIA,\r\n" + 
 							"GIALLO;");
 					
-					String nuovoGenere= 
-					listaScaffali.get(scaffale).getListaLibri().get(libro).setGenere(nuovoGenere);
-					
-					
+					String nuovoGenere= scanner.nextLine();
+					Genere genere= Genere.valueOf(nuovoGenere);
+					listaScaffali.get(scaffale).getListaLibri().get(libro).setGenere(genere);
 				}
 			}
 		}
-	
-}
-	
-	private static List<Scaffale> caricaScaffale() throws IOException, ClassNotFoundException {
-		System.out.println("dammi il nome del file");
-		String nome=scanner.nextLine();
-		File file = new File(nome);
-		if (!file.exists()) {
-			file.createNewFile();
-			return  caricaScaffale();
-		}
-		FileInputStream in = new FileInputStream(file);
-		ObjectInputStream stream = new ObjectInputStream(in);
-		List<Scaffale> c = (List<Scaffale>) stream.readObject();
-		stream.close();
-		return c;
 	}
-	private static void salvaScaffale(List<Scaffale> c) throws IOException {
-		System.out.println("dammi il nome del file");
-		String nome=scanner.nextLine();
-	File file = new File(nome);
-	FileOutputStream out = new FileOutputStream(file);
-	ObjectOutputStream stream = new ObjectOutputStream(out);
-	stream.writeObject(c);
-	stream.close();
-}
+	
+	
+	public static void salvaSuFile() {
+		List<Scaffale> listaScaffali=new ArrayList<>();
+		try {
+			File file = new File("listaScaffali.txt");
+			FileOutputStream out = new FileOutputStream(file);
+			ObjectOutputStream stream = new ObjectOutputStream(out);
+			stream.writeObject(listaScaffali);
+			stream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		try {
+				File file2 = new File("listaLibri.txt");
+				FileOutputStream out = new FileOutputStream(file2);
+				ObjectOutputStream stream = new ObjectOutputStream(out);
+				stream.writeObject(listaLibri);
+				stream.close();
+		} catch (IOException e) {
+				e.printStackTrace();
+		}
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public static void creaNuovoFile() {
+		List<Scaffale> listaScaffali=new ArrayList<>();
+		try {
+			File file = new File("listaScaffali.txt");
+			FileInputStream in = new FileInputStream(file);
+			ObjectInputStream stream = new ObjectInputStream(in);
+			listaScaffali = (List<Scaffale>) stream.readObject();
+			for (Scaffale scaffale : listaScaffali) {
+				System.out.println(scaffale);
+			}
+			stream.close();
+		} catch (IOException ext) {
+			System.out.println("Eccezione");
+			ext.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			File file = new File("listaLibri.txt");
+			FileInputStream in = new FileInputStream(file);
+			ObjectInputStream stream = new ObjectInputStream(in);
+			listaLibri = (List<Libro>) stream.readObject();
+			for (Libro libro : listaLibri) {
+				System.out.println(libro);
+			}
+			stream.close();
+		} catch (IOException ext) {
+			System.out.println("Eccezione");
+			ext.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void libriPiuPrenotati() {
+		Collections.sort(listaLibri);
+		for (Libro libro : listaLibri) {
+			System.out.println(libro);
+		}
+	}
+	
 
-
-
+	public Libro libriMenoPrenotati() {
+		Collections.sort(listaLibri);
+		return listaLibri.get(0);
+	}
 }
