@@ -1,6 +1,6 @@
 package it.dstech.biblioteca;
 
-port java.io.File;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -98,8 +98,7 @@ case 2:
 			Genere genere= Genere.valueOf(nuovoGenere);
 		
 		Libro p = new	Libro( titolo,  autore,  genere);
-		listaScaffali.get(scelta).aggiungiLibro(p);
-		
+		listaScaffali.get(controlloGenere(genere)).aggiungiLibro(p);		
 		
 		
 	}
@@ -143,6 +142,18 @@ case 2:
 		}
 		
 	}
+	public static int controlloGenere(Genere genere){
+		List<Scaffale> listaScaffali=new ArrayList<>();
+		int indiceScaffale=0;
+		int indice=0;
+		for (Scaffale scaffale : listaScaffali) {
+			if(genere==scaffale.getGenere()) {
+				indiceScaffale=indice;
+			}
+			indice++;	
+		}
+		return indiceScaffale;
+	}
 	public static void stampaLibri() {
 		List<Scaffale> listaScaffali=new ArrayList<>();
 		for(int i=0;i<listaScaffali.size();i++) {
@@ -183,8 +194,9 @@ case 2:
 							"THRILLER,\r\n" + 
 							"COMMEDIA,\r\n" + 
 							"GIALLO;");
-					String nuovoGenere= scanner.nextLine();
-					listaScaffali.get(scaffale).getListaLibri().get(libro).setGenere(scanner.nextLine());
+					
+					String nuovoGenere= 
+					listaScaffali.get(scaffale).getListaLibri().get(libro).setGenere(nuovoGenere);
 					
 					
 				}
