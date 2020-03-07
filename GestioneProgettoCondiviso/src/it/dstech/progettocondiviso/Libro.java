@@ -1,6 +1,8 @@
 package it.dstech.biblioteca;
 
-public class Libro implements Comparable <Libro>{
+import java.io.Serializable;
+
+public class Libro implements Comparable <Libro>,Serializable{
 
 	private String titolo;
 	private String autore;
