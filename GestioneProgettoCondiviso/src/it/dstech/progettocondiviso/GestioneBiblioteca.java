@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class GestioneBiblioteca {
 	static List<Libro> listaLibri=new ArrayList<>();
-
+static List<Scaffale> listaScaffali=new ArrayList<>();
 	static Scanner scanner=new Scanner(System.in);
 	public static void main(String[] args) {
 		
@@ -40,7 +40,11 @@ public class GestioneBiblioteca {
 					aggiornaLibro();
 				break;
 				case 4:
+					libriPiuPrenotati();
 				break;
+				case 5:
+					libriMenoPrenotati();
+					break;
 				case 6:
 					stampaScaffali();
 				break;
@@ -59,23 +63,41 @@ public class GestioneBiblioteca {
 			
 
 	public static void aggiungiScaffale() {
-		List<Scaffale> listaScaffali=new ArrayList<>();
+		Genere genere=null;
 		System.out.println("Inserisci il genere");
-		System.out.println("HORROR,\r\n" + 
-				"FANTASY,\r\n" + 
-				"STORICO,\r\n" + 
-				"FANTASCIENZA,\r\n" + 
-				"THRILLER,\r\n" + 
-				"COMMEDIA,\r\n" + 
-				"GIALLO;");
-		String nuovoGenere= scanner.nextLine();
-		Genere genere= Genere.valueOf(nuovoGenere);
+		System.out.println("1.HORROR,\r\n" + 
+				"2.FANTASY,\r\n" + 
+				"3.FANTASCIENZA,\r\n" + 
+				"4.THRILLER,\r\n"  
+				);
+		int scelta=scanner.nextInt();
+		
+		switch (scelta) {
+		case 1: {
+			 genere= Genere.HORROR;
+			
+			break;}
+		case 2: {
+			 genere= Genere.FANTASY;
+			
+			break;}
+			case 3: {
+				 genere= Genere.FANTASCIENZA;
+					
+					break;}
+					case 4: {
+						 genere= Genere.THRILLER;
+							
+							break;}
+		default:
+			break;
+		}
+		
 		Scaffale p = new Scaffale( genere);
 		listaScaffali.add(p);
 	}
 	
 	public static void aggiungiLibro() {
-		List<Scaffale> listaScaffali=new ArrayList<>();
 		for(int i=0;i<listaScaffali.size();i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
 		}
@@ -88,16 +110,35 @@ public class GestioneBiblioteca {
 		String titolo = scanner.nextLine();
 		System.out.println("Inserisci l autore");
 		String autore = scanner.nextLine();
+		Genere genere=null;
 		System.out.println("Inserisci il genere");
-		System.out.println("HORROR,\r\n" + 
-					"FANTASY,\r\n" + 
-					"STORICO,\r\n" + 
-					"FANTASCIENZA,\r\n" + 
-					"THRILLER,\r\n" + 
-					"COMMEDIA,\r\n" + 
-					"GIALLO;");
-		String nuovoGenere= scanner.nextLine();
-		Genere genere= Genere.valueOf(nuovoGenere);
+		System.out.println("1.HORROR,\r\n" + 
+				"2.FANTASY,\r\n" + 
+				"3.FANTASCIENZA,\r\n" + 
+				"4.THRILLER,\r\n"  
+				);
+		 scelta=scanner.nextInt();
+		
+		switch (scelta) {
+		case 1: {
+			 genere= Genere.HORROR;
+			
+			break;}
+		case 2: {
+			 genere= Genere.FANTASY;
+			
+			break;}
+			case 3: {
+				 genere= Genere.FANTASCIENZA;
+					
+					break;}
+					case 4: {
+						 genere= Genere.THRILLER;
+							
+							break;}
+		default:
+			break;
+		}
 		
 		Libro p = new	Libro( titolo,  autore,  genere);
 		listaScaffali.get(controlloGenere(genere)).aggiungiLibro(p);		
@@ -138,15 +179,13 @@ public class GestioneBiblioteca {
 		
 	}
 	public static void stampaScaffali() {
-		List<Scaffale> listaScaffali=new ArrayList<>();
 		for(int i=0;i<listaScaffali.size();i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
-		}	
+		}
 	}
 	
 	
 	public static int controlloGenere(Genere genere){
-		List<Scaffale> listaScaffali=new ArrayList<>();
 		int indiceScaffale=0;
 		int indice=0;
 		for (Scaffale scaffale : listaScaffali) {
@@ -160,7 +199,6 @@ public class GestioneBiblioteca {
 	
 	
 	public static void stampaLibri() {
-		List<Scaffale> listaScaffali=new ArrayList<>();
 		for(int i=0;i<listaScaffali.size();i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
 		}
@@ -171,7 +209,6 @@ public class GestioneBiblioteca {
 	
 	
 	public static void aggiornaLibro() {
-		List<Scaffale> listaScaffali=new ArrayList<>();
 		boolean sceltaCorretta= true;
 		System.out.println("Ecco la lista degli scaffali, quale vuoi selezionare?");
 		stampaScaffali();
@@ -193,26 +230,54 @@ public class GestioneBiblioteca {
 					System.out.println("Inserisci il nuovo titolo");
 					listaScaffali.get(scaffale).getListaLibri().get(libro).setAutore(scanner.nextLine());
 				} else {
-					System.out.println("Inserisci il nuovo genere");
-					System.out.println("HORROR,\r\n" + 
-							"FANTASY,\r\n" + 
-							"STORICO,\r\n" + 
-							"FANTASCIENZA,\r\n" + 
-							"THRILLER,\r\n" + 
-							"COMMEDIA,\r\n" + 
-							"GIALLO;");
+					Genere genere=null;
+					System.out.println("Inserisci il genere");
+					System.out.println("1.HORROR,\r\n" + 
+							"2.FANTASY,\r\n" + 
+							"3.FANTASCIENZA,\r\n" + 
+							"4.THRILLER,\r\n"  
+							);
+					 scelta=scanner.nextInt();
 					
-					String nuovoGenere= scanner.nextLine();
-					Genere genere= Genere.valueOf(nuovoGenere);
+					switch (scelta) {
+					case 1: {
+						 genere= Genere.HORROR;
+						
+						break;}
+					case 2: {
+						 genere= Genere.FANTASY;
+						
+						break;}
+						case 3: {
+							 genere= Genere.FANTASCIENZA;
+								
+								break;}
+								case 4: {
+									 genere= Genere.THRILLER;
+										
+										break;}
+					default:
+						break;
+					}
+					
 					listaScaffali.get(scaffale).getListaLibri().get(libro).setGenere(genere);
 				}
 			}
 		}
 	}
-	
+	public static void rimuoviLibro() {
+		for(int i=0;i<listaScaffali.size();i++) {
+			System.out.println(i+"." + listaScaffali.get(i) );
+		}System.out.println("da quale scaffale vuoi rimuovere");
+		int scelta=scanner.nextInt();
+		for(int i=0;i<listaScaffali.get(scelta).getListaLibri().size();i++) {
+			System.out.println(i+"." + listaScaffali.get(scelta).getListaLibri() );
+		}System.out.println("quale libro vuoi rimuovere?");
+		scelta=scanner.nextInt();
+		listaScaffali.get(scelta).rimuoviLibro(listaScaffali.get(scelta).getListaLibri().get(scelta));
+	}
 	
 	public static void salvaSuFile() {
-		List<Scaffale> listaScaffali=new ArrayList<>();
 		try {
 			File file = new File("listaScaffali.txt");
 			FileOutputStream out = new FileOutputStream(file);
@@ -236,7 +301,6 @@ public class GestioneBiblioteca {
 	
 	@SuppressWarnings("unchecked")
 	public static void creaNuovoFile() {
-		List<Scaffale> listaScaffali=new ArrayList<>();
 		try {
 			File file = new File("listaScaffali.txt");
 			FileInputStream in = new FileInputStream(file);
@@ -270,16 +334,19 @@ public class GestioneBiblioteca {
 	}
 	
 	
-	public void libriPiuPrenotati() {
+	public static void libriPiuPrenotati() {
 		Collections.sort(listaLibri);
+		Collections.reverse(listaLibri);
 		for (Libro libro : listaLibri) {
 			System.out.println(libro);
 		}
 	}
 	
 
-	public Libro libriMenoPrenotati() {
+	public static void libriMenoPrenotati() {
 		Collections.sort(listaLibri);
-		return listaLibri.get(0);
+		for (Libro libro : listaLibri) {
+			System.out.println(libro);
+		}
 	}
 }
