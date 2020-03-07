@@ -7,65 +7,79 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 
-
 public class GestioneBiblioteca {
 	static List<Libro> listaLibri=new ArrayList<>();
+
 	static Scanner scanner=new Scanner(System.in);
-	
 	public static void main(String[] args) {
-		
 		creaNuovoFile();
-		while(true){
-			menu();
-			int scelta=scanner.nextInt();
-			scanner.nextLine();
-			switch (scelta) {
-			case 1:System.out.println("1. Aggiungi 2. Rimuovi");
-				scelta=scanner.nextInt();
-				if(scelta==1) {
-					aggiungiScaffale();
-				} else {
-					rimuoviScaffale();
+			while(true){
+		menu();
+		 int scelta=scanner.nextInt();
+		 scanner.nextLine();
+		switch (scelta) {
+		case 1:System.out.println("1. aggiungi 2. rimuovi");
+		scelta=scanner.nextInt();
+		if(scelta==1) {
+			aggiungiScaffale();
+			}else {
+			rimuoviScaffale();
 			}
 			break;
-		case 2:
-			aggiungiLibro();
+case 2:
+	aggiungiLibro();
+	
+				
+			
 			break;
-		case 3:
-			aggiornaLibro();
-			break;		
-		case 6:
-			stampaScaffali();
-			stampaLibri();
-			break;
-		default:
-			break;
-				}	
-			}
-		}
-		
+case 3:
+	aggiornaLibro();
+	break;
+case 4:
+	
+	break;
+case 6:
+	stampaScaffali();
+	break;
+case 7:
+	stampaLibri();
+	break;
+case 8:
+	salvaSuFile();
+	break;
+default:
+	salvaSuFile();
+
+	break;
+} 
+			
+	}}
+			
+	
+
+	
 	
 	
 	public static void aggiungiScaffale() {
 		List<Scaffale> listaScaffali=new ArrayList<>();
 		System.out.println("Inserisci il genere");
 		System.out.println("HORROR,\r\n" + 
-						   "FANTASY,\r\n" + 
-						   "STORICO,\r\n" + 
-						   "FANTASCIENZA,\r\n" + 
-						   "THRILLER,\r\n" + 
-						   "COMMEDIA,\r\n" + 
-						   "GIALLO;");
+				"FANTASY,\r\n" + 
+				"STORICO,\r\n" + 
+				"FANTASCIENZA,\r\n" + 
+				"THRILLER,\r\n" + 
+				"COMMEDIA,\r\n" + 
+				"GIALLO;");
 		String nuovoGenere= scanner.nextLine();
 		Genere genere= Genere.valueOf(nuovoGenere);
-		Scaffale p = new Scaffale( genere);
+		Scaffale p = new	Scaffale( genere);
 		listaScaffali.add(p);
 	}
-	
 	
 	public static void aggiungiLibro() {
 		List<Scaffale> listaScaffali=new ArrayList<>();
@@ -80,23 +94,23 @@ public class GestioneBiblioteca {
 		System.out.println("Inserisci il nome");
 		String titolo = scanner.nextLine();
 		System.out.println("Inserisci l autore");
-		String autore = scanner.nextLine();
-		System.out.println("Inserisci il genere");
-		System.out.println("HORROR,\r\n" + 
+		 String autore = scanner.nextLine();
+		 System.out.println("Inserisci il genere");
+			System.out.println("HORROR,\r\n" + 
 					"FANTASY,\r\n" + 
 					"STORICO,\r\n" + 
 					"FANTASCIENZA,\r\n" + 
 					"THRILLER,\r\n" + 
 					"COMMEDIA,\r\n" + 
 					"GIALLO;");
-		String nuovoGenere= scanner.nextLine();
-		Genere genere= Genere.valueOf(nuovoGenere);
+			String nuovoGenere= scanner.nextLine();
+			Genere genere= Genere.valueOf(nuovoGenere);
 		
 		Libro p = new	Libro( titolo,  autore,  genere);
 		listaScaffali.get(controlloGenere(genere)).aggiungiLibro(p);		
+		
+		
 	}
-	
-	
 	public static void rimuoviScaffale(){
 		boolean condizione= true;
 		while(condizione){
@@ -118,30 +132,25 @@ public class GestioneBiblioteca {
 			} 
 		}
 	}
-	
-	
-	public static void menu() {
+	private static void menu() {
 		System.out.println("1. Inserisci o rimuovi uno scaffale");
 		System.out.println("2. Inserisci o rimuovi un libro");
 		System.out.println("3. aggiorna libri");
-		System.out.println("4. ");
-		System.out.println("5. Elenca i 5 prodotti più costosi e i 5 più economici");
-		System.out.println("6. Elenca i primi 5 clienti in ordine di spesa effettuata");
-		System.out.println("7. Elenca i 3 clienti che hanno speso meno");
-		System.out.println("8. Elenca i 3 prodotti più venduti e i 3 meno venduti");
-		System.out.println("9. Stampa e salva");
-		System.out.println("0. Esci");
+		System.out.println("4. stampa libri più prenotati");
+		System.out.println("5. stampa libri meno prenotati");
+		System.out.println("6. stampa scaffale");
+		System.out.println("7. stampa libri");
+		System.out.println("8.salva ");
+		System.out.println("9. Esci");
+		
 	}
-	
-	
 	public static void stampaScaffali() {
 		List<Scaffale> listaScaffali=new ArrayList<>();
 		for(int i=0;i<listaScaffali.size();i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
 		}
+		
 	}
-	
-	
 	public static int controlloGenere(Genere genere){
 		List<Scaffale> listaScaffali=new ArrayList<>();
 		int indiceScaffale=0;
@@ -154,8 +163,6 @@ public class GestioneBiblioteca {
 		}
 		return indiceScaffale;
 	}
-	
-	
 	public static void stampaLibri() {
 		List<Scaffale> listaScaffali=new ArrayList<>();
 		for(int i=0;i<listaScaffali.size();i++) {
@@ -165,8 +172,6 @@ public class GestioneBiblioteca {
 		int scelta=scanner.nextInt();
 		System.out.println(listaScaffali.get(scelta).getListaLibri());
 	}
-	
-	
 	public static void aggiornaLibro() {
 		List<Scaffale> listaScaffali=new ArrayList<>();
 		boolean sceltaCorretta= true;
@@ -199,15 +204,16 @@ public class GestioneBiblioteca {
 							"COMMEDIA,\r\n" + 
 							"GIALLO;");
 					
-					String gen= scanner.nextLine();
-					Genere nuovoGenere= Genere.valueOf(gen);
-					listaScaffali.get(scaffale).getListaLibri().get(libro).setGenere(nuovoGenere);
+					String nuovoGenere= scanner.nextLine();
+					Genere genere= Genere.valueOf(nuovoGenere);
+					listaScaffali.get(scaffale).getListaLibri().get(libro).setGenere(genere);
+					
+					
 				}
 			}
-		}	
-	}
+		}
 	
-	
+}
 	
 	public static void salvaSuFile() {
 		List<Scaffale> listaScaffali=new ArrayList<>();
@@ -265,4 +271,16 @@ public class GestioneBiblioteca {
 			e.printStackTrace();
 		}
 	}
+	public Libro libriPiuPrenotati() {
+		Collections.sort(listaLibri);
+		return listaLibri.get(listaLibri.size() - 1);
+	}
+
+	public Libro libriMenoPrenotati() {
+		Collections.sort(listaLibri);
+		return listaLibri.get(0);
+
+	}
+
+
 }
