@@ -4,12 +4,12 @@ public class Libro implements Comparable <Libro>{
 
 	private String titolo;
 	private String autore;
-	private String genere;
+	private Genere genere;
 	private boolean prenotabilità;
 	private int numeroPrenotazioni;
 
 	
-	public Libro(String titolo, String autore, String genere) {
+	public Libro(String titolo, String autore, Genere genere) {
 		super();
 		this.titolo = titolo;
 		this.autore = autore;
@@ -21,6 +21,7 @@ public class Libro implements Comparable <Libro>{
 		return titolo;
 	}
 
+	
 	public void cambiaPrenotazione() {
 		if(prenotabilità) {
 			this.prenotabilità=false;
@@ -40,8 +41,7 @@ public class Libro implements Comparable <Libro>{
 		this.titolo = titolo;
 	}
 
-
-
+	
 	public String getAutore() {
 		return autore;
 	}
@@ -52,12 +52,12 @@ public class Libro implements Comparable <Libro>{
 	}
 
 
-	public String getGenere() {
+	public Genere getGenere() {
 		return genere;
 	}
 
 
-	public void setGenere(String genere) {
+	public void setGenere(Genere genere) {
 		this.genere = genere;
 	}
 
@@ -102,4 +102,5 @@ public class Libro implements Comparable <Libro>{
 		this.numeroPrenotazioni = numeroPrenotazioni;
 	}
 }
+
 
