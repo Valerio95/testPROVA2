@@ -12,13 +12,15 @@ public class GestioneBiblioteca {
 	
 	public static void main(String[] args) {
      
-			while(true){
-		menu();
-		 int scelta=scanner.nextInt();
+		while(true){
+			menu();
+		int scelta=scanner.nextInt();
+		
 		switch (scelta) {
 		case 1:
-			System.out.println("1. aggiungi 2. rimuovi");
+			System.out.println("1. Aggiungi 2. Rimuovi");
 			scelta=scanner.nextInt();
+			scanner.nextLine();
 			if(scelta==1) {
 				aggiungiScaffale();
 			} else {
@@ -26,9 +28,15 @@ public class GestioneBiblioteca {
 			}
 			break;
 		case 2:
-			
+			aggiungiLibro();
 			break;
-		
+		case 3:
+			aggiornaLibro();
+			break;
+		case 6:
+			stampaScaffali();
+			stampaLibri();
+			break;
 		
 		default:
 			break;
@@ -43,32 +51,43 @@ public class GestioneBiblioteca {
 		listaScaffali.add(p);
 	}
 	
+	
 	public static void aggiungiLibro() {
 		
 		for(int i=0;i<listaScaffali.size();i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
 		}
-		System.out.println("a quale scaffale vuoi aggiungere il libro");
-		int scelta= scanner.nextInt();
-		listaScaffali.get(scelta);
-		System.out.println("dammi l'indice dello scaffale a cui vuoi aggiungere il");
 		
 		System.out.println("Inserisci il nome");
 		String titolo = scanner.nextLine();
 		System.out.println("Inserisci l autore");
-		 String autore = scanner.nextLine();
-		 System.out.println("Inserisci il genere");
-		 String genere = scanner.nextLine();
+		String autore = scanner.nextLine();
+		System.out.println("Inserisci il genere");
+		String genere = scanner.nextLine();
+		
+		
 		
 		Libro p = new	Libro( titolo,  autore,  genere);
-		listaScaffali.get(scelta).aggiungiLibro(p);	
+		listaScaffali.get(controlloGenere(genere)).aggiungiLibro(p);	
 	}
+	
+	public static int controlloGenere(String genere){
+		int indiceScaffale=0;
+		int indice=0;
+		for (Scaffale scaffale : listaScaffali) {
+			indice++;
+			if(genere.equals(scaffale.getGenere())) {}
+			indiceScaffale=indice;
+		}
+		return indiceScaffale;
+	}
+	
 	public static void rimuoviScaffale(){
 		boolean condizione= true;
 		while(condizione){
 			int indice=0;
+			System.out.println("Ecco gli scaffali presenti nella lista");
 			for(Scaffale p : listaScaffali) {
-				System.out.println("Ecco i scaffale presenti nella lista");
 				System.out.println(indice+"."+p);	
 				indice++;
 			}
@@ -76,7 +95,7 @@ public class GestioneBiblioteca {
 			int scelta= scanner.nextInt();
 			scanner.nextLine();
 			listaScaffali.remove(scelta);
-			System.out.println("Vuoi scaffale un altro cliente?");
+			System.out.println("Vuoi rimuovere un altro scaffale?");
 			String siNo =  scanner.nextLine();
 			if(siNo.equals("no")) {
 				condizione=false;
