@@ -1,11 +1,12 @@
 package it.dstech.biblioteca;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
 
-public class Scaffale {
+public class Scaffale implements Serializable{
 	private Genere genere;
 	List<Libro> listaLibri = new ArrayList<>();
 
