@@ -5,7 +5,7 @@ public class Libro implements Comparable <Libro>{
 	private String titolo;
 	private String autore;
 	private String genere;
-	private boolean prenotabilit‡;
+	private boolean prenotabilit√†;
 	private int numeroPrenotazioni;
 
 	
@@ -22,11 +22,11 @@ public class Libro implements Comparable <Libro>{
 	}
 
 	public void cambiaPrenotazione() {
-		if(prenotabilit‡) {
-			this.prenotabilit‡=false;
+		if(prenotabilit√†) {
+			this.prenotabilit√†=false;
 			aumentaPrenotazioni();
 		} else {
-			this.prenotabilit‡=true;
+			this.prenotabilit√†=true;
 		}
 	}
 
@@ -47,9 +47,6 @@ public class Libro implements Comparable <Libro>{
 	}
 
 
-
-
-
 	public void setAutore(String autore) {
 		this.autore = autore;
 	}
@@ -65,20 +62,23 @@ public class Libro implements Comparable <Libro>{
 	}
 
 
-	public boolean isPrenotabilit‡() {
-		return prenotabilit‡;
+	public boolean isPrenotabilit√†() {
+		return prenotabilit√†;
 	}
 
 
-	public void setPrenotabilit‡(boolean prenotabilit‡) {
-		this.prenotabilit‡ = prenotabilit‡;
+	public void setPrenotabilit√†(boolean prenotabilit√†) {
+		this.prenotabilit√† = prenotabilit√†;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Libro [titolo=" + titolo + ", autore=" + autore + ", genere=" + genere + ", prenotabilit‡="
-				+ prenotabilit‡ + "]";
+		if(prenotabilit√†) {
+			return "Libro [titolo=" + titolo + ", autore=" + autore + ", genere=" + genere + ", prenotabilit√†= non prenotabile]";
+		}
+		return  "Libro [titolo=" + titolo + ", autore=" + autore + ", genere=" + genere + ","
+				+ "  prenotabilit√†= prenotabile]";
 	}
 
 
@@ -92,7 +92,6 @@ public class Libro implements Comparable <Libro>{
 		return 0;
 	}
 
-
 	
 	public int getNumeroPrenotazioni() {
 		return numeroPrenotazioni;
@@ -102,6 +101,5 @@ public class Libro implements Comparable <Libro>{
 	public void setNumeroPrenotazioni(int numeroPrenotazioni) {
 		this.numeroPrenotazioni = numeroPrenotazioni;
 	}
-
-
 }
+
