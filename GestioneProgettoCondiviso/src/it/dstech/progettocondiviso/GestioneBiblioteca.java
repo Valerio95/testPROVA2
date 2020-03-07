@@ -7,10 +7,12 @@ import java.util.Scanner;
 
 public class GestioneBiblioteca {
 	static List<Libro> listaLibri=new ArrayList<>();
-	static List<Scaffale> listaScaffali=new ArrayList<>();
+	
 	static Scanner scanner=new Scanner(System.in);
 	
 	public static void main(String[] args) {
+		try {
+		List<Scaffale> listaScaffali= caricaScaffale();
      
 		while(true){
 			menu();
@@ -41,7 +43,10 @@ public class GestioneBiblioteca {
 		default:
 			break;
 		} 
-	}	
+	}
+		catch (IOException | ClassNotFoundException e) {
+				e.printStackTrace();
+				}
 }
 	
 	public static void aggiungiScaffale() {
@@ -161,4 +166,29 @@ public class GestioneBiblioteca {
 			}
 		}
 	}
+	
+	private static List<Scaffale> caricaScaffale() throws IOException, ClassNotFoundException {
+		System.out.println("dammi il nome del file");
+		String nome=scanner.nextLine();
+		File file = new File(nome);
+		if (!file.exists()) {
+			file.createNewFile();
+			return  caricaScaffale();
+		}
+		FileInputStream in = new FileInputStream(file);
+		ObjectInputStream stream = new ObjectInputStream(in);
+		List<Scaffale> c = (List<Scaffale>) stream.readObject();
+		stream.close();
+		return c;
+	}
+	private static void salvaScaffale(List<Scaffale> c) throws IOException {
+		System.out.println("dammi il nome del file");
+		String nome=scanner.nextLine();
+	File file = new File(nome);
+	FileOutputStream out = new FileOutputStream(file);
+	ObjectOutputStream stream = new ObjectOutputStream(out);
+	stream.writeObject(c);
+	stream.close();
+}
+
 }
