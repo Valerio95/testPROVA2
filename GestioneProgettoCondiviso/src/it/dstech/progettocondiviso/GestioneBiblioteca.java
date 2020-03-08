@@ -313,15 +313,6 @@ public class GestioneBiblioteca {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		try {
-				File file2 = new File("listaLibri.txt");
-				FileOutputStream out = new FileOutputStream(file2);
-				ObjectOutputStream stream = new ObjectOutputStream(out);
-				stream.writeObject(listaLibri);
-				stream.close();
-		} catch (IOException e) {
-				e.printStackTrace();
-		}
 	}
 	
 	
@@ -332,18 +323,6 @@ public class GestioneBiblioteca {
 			FileInputStream in = new FileInputStream(file);
 			ObjectInputStream stream = new ObjectInputStream(in);
 			listaScaffali = (List<Scaffale>) stream.readObject();
-			stream.close();
-		} catch (IOException ext) {
-			System.out.println("Eccezione");
-			ext.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		try {
-			File file = new File("listaLibri.txt");
-			FileInputStream in = new FileInputStream(file);
-			ObjectInputStream stream = new ObjectInputStream(in);
-			listaLibri = (List<Libro>) stream.readObject();
 			stream.close();
 		} catch (IOException ext) {
 			System.out.println("Eccezione");
