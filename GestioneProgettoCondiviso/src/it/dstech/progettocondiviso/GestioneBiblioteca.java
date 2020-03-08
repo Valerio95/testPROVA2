@@ -83,9 +83,7 @@ public class GestioneBiblioteca {
 		scanner.nextLine();
 		System.out.println("Di quale libro vuoi modificare la prenotabilità?");
 		System.out.println(listaScaffali.get(scaffale).getListaLibri());
-		int libro=scanner.nextInt();
-		scanner.nextLine();
-		listaScaffali.get(scaffale).getListaLibri().get(libro).cambiaPrenotazione();
+		listaScaffali.get(scaffale).getListaLibri().get(scanner.nextInt()).cambiaPrenotazione();
 		System.out.println("Prenotazione modificata");
 	}
 			
