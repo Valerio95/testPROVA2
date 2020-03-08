@@ -13,9 +13,11 @@ import java.util.Scanner;
 
 
 public class GestioneBiblioteca {
+	
 	static List<Libro> listaLibri=new ArrayList<>();
-static List<Scaffale> listaScaffali=new ArrayList<>();
+	static List<Scaffale> listaScaffali=new ArrayList<>();
 	static Scanner scanner=new Scanner(System.in);
+	
 	public static void main(String[] args) {
 		
 		creaNuovoFile();
@@ -27,44 +29,70 @@ static List<Scaffale> listaScaffali=new ArrayList<>();
 			switch (scelta) {
 				case 1:System.out.println("1. Aggiungi 2. Rimuovi");
 					scelta=scanner.nextInt();
-				if(scelta==1) {
-					aggiungiScaffale();
-				} else {
-					rimuoviScaffale();
-				}
+					scanner.nextLine();
+					if(scelta==1) {
+						aggiungiScaffale();
+					} else {
+						rimuoviScaffale();
+					}
 				break;
 				case 2:
-					aggiungiLibro();
+					System.out.println("1. Aggiungi 2. Rimuovi");
+					scelta=scanner.nextInt();
+					scanner.nextLine();
+					if(scelta==1) {
+						aggiungiLibro();
+					} else {
+						rimuoviLibro();
+					}
 					break;
 				case 3:
 					aggiornaLibro();
 				break;
 				case 4:
+					cambiaPrenotabilità();
+					break;
+				case 5:
 					libriPiuPrenotati();
 				break;
-				case 5:
+				case 6:
 					libriMenoPrenotati();
 					break;
-				case 6:
+				case 7:
 					stampaScaffali();
 				break;
-				case 7:
+				case 8:
 					stampaLibri();
 				break;
-				case 8:
+				case 9:
 					salvaSuFile();
 				break;
 				default:
 					salvaSuFile();
+					System.exit(0);
 				break;
 			} 
 		}
+	}
+	
+	
+	public static void cambiaPrenotabilità() {
+		System.out.println("Ecco la lista degli scaffali, quale vuoi selezionare?");
+		stampaScaffali();
+		int scaffale= scanner.nextInt();
+		scanner.nextLine();
+		System.out.println("Di quale libro vuoi modificare la prenotabilità?");
+		System.out.println(listaScaffali.get(scaffale).getListaLibri());
+		int libro=scanner.nextInt();
+		scanner.nextLine();
+		listaScaffali.get(scaffale).getListaLibri().get(libro).cambiaPrenotazione();
+		System.out.println("Prenotazione modificata");
 	}
 			
 
 	public static void aggiungiScaffale() {
 		Genere genere=null;
-		System.out.println("Inserisci il genere");
+		System.out.println("Inserisci l'indice del genere");
 		System.out.println("1.HORROR,\r\n" + 
 				"2.FANTASY,\r\n" + 
 				"3.FANTASCIENZA,\r\n" + 
@@ -73,22 +101,18 @@ static List<Scaffale> listaScaffali=new ArrayList<>();
 		int scelta=scanner.nextInt();
 		
 		switch (scelta) {
-		case 1: {
-			 genere= Genere.HORROR;
-			
+			case 1: {
+				genere= Genere.HORROR;
 			break;}
-		case 2: {
-			 genere= Genere.FANTASY;
-			
+			case 2: {
+				genere= Genere.FANTASY;
+			break;
+			} case 3: {
+				genere= Genere.FANTASCIENZA;	
+			break;
+			} case 4: {
+				genere= Genere.THRILLER;			
 			break;}
-			case 3: {
-				 genere= Genere.FANTASCIENZA;
-					
-					break;}
-					case 4: {
-						 genere= Genere.THRILLER;
-							
-							break;}
 		default:
 			break;
 		}
@@ -97,18 +121,12 @@ static List<Scaffale> listaScaffali=new ArrayList<>();
 		listaScaffali.add(p);
 	}
 	
+	
 	public static void aggiungiLibro() {
-		for(int i=0;i<listaScaffali.size();i++) {
-			System.out.println(i+"." + listaScaffali.get(i) );
-		}
-		System.out.println("A quale scaffale vuoi aggiungere il libro");
-		int scelta= scanner.nextInt();
-		listaScaffali.get(scelta);
-		System.out.println("Inserisci l'indice dello scaffale a cui vuoi aggiungere il titolo");
-		
-		System.out.println("Inserisci il nome");
+
+		System.out.println("Inserisci il nome del libro da aggiungere");
 		String titolo = scanner.nextLine();
-		System.out.println("Inserisci l autore");
+		System.out.println("Inserisci l' autore");
 		String autore = scanner.nextLine();
 		Genere genere=null;
 		System.out.println("Inserisci il genere");
@@ -117,29 +135,27 @@ static List<Scaffale> listaScaffali=new ArrayList<>();
 				"3.FANTASCIENZA,\r\n" + 
 				"4.THRILLER,\r\n"  
 				);
-		 scelta=scanner.nextInt();
+		int scelta=scanner.nextInt();
+		scanner.nextLine();
 		
 		switch (scelta) {
-		case 1: {
-			 genere= Genere.HORROR;
+			case 1: 
+				genere= Genere.HORROR;
 			
-			break;}
-		case 2: {
-			 genere= Genere.FANTASY;
+			break;
+			case 2: 
+				genere= Genere.FANTASY;
 			
-			break;}
-			case 3: {
+			break;
+			case 3: 
 				 genere= Genere.FANTASCIENZA;
-					
-					break;}
-					case 4: {
-						 genere= Genere.THRILLER;
-							
-							break;}
+			break;
+			case 4: 
+				genere= Genere.THRILLER;		
+			break;
 		default:
 			break;
 		}
-		
 		Libro p = new	Libro( titolo,  autore,  genere);
 		listaScaffali.get(controlloGenere(genere)).aggiungiLibro(p);		
 	}
@@ -148,36 +164,39 @@ static List<Scaffale> listaScaffali=new ArrayList<>();
 	public static void rimuoviScaffale(){
 		boolean condizione= true;
 		while(condizione){
-			List<Scaffale> listaScaffali=new ArrayList<>();
 			int indice=0;
+			System.out.println("Ecco gli scaffali presenti nella lista");
 			for(Scaffale p : listaScaffali) {
-				System.out.println("Ecco i scaffale presenti nella lista");
-				System.out.println(indice+"."+p);	
+				System.out.println(indice+ "." +p);	
 				indice++;
 			}
 			System.out.println("Quale scaffale vuoi rimuovere?");
 			int scelta= scanner.nextInt();
 			scanner.nextLine();
 			listaScaffali.remove(scelta);
-			System.out.println("Vuoi scaffale un altro cliente?");
+			System.out.println("Vuoi rimuovere un altro scaffale?");
 			String siNo =  scanner.nextLine();
 			if(siNo.equals("no")) {
 				condizione=false;
 			} 
 		}
 	}
-	private static void menu() {
+	
+	
+	public static void menu() {
 		System.out.println("1. Inserisci o rimuovi uno scaffale");
 		System.out.println("2. Inserisci o rimuovi un libro");
 		System.out.println("3. Aggiorna libri");
-		System.out.println("4. Stampa libri più prenotati");
-		System.out.println("5. Stampa libri meno prenotati");
-		System.out.println("6. Stampa scaffale");
-		System.out.println("7. Stampa libri");
-		System.out.println("8. Salva ");
-		System.out.println("9. Esci");
-		
+		System.out.println("4. Cambia prenotabilità di un libro");
+		System.out.println("5. Stampa libri più prenotati");
+		System.out.println("6. Stampa libri meno prenotati");
+		System.out.println("7. Stampa scaffali");
+		System.out.println("8. Stampa libri");
+		System.out.println("9. Salva ");
+		System.out.println("0. Esci");
 	}
+	
+	
 	public static void stampaScaffali() {
 		for(int i=0;i<listaScaffali.size();i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
@@ -196,14 +215,15 @@ static List<Scaffale> listaScaffali=new ArrayList<>();
 		}
 		return indiceScaffale;
 	}
-	
+
 	
 	public static void stampaLibri() {
-		for(int i=0;i<listaScaffali.size();i++) {
+		for(int i=0; i<listaScaffali.size(); i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
 		}
-		System.out.println("Dammi l'indice dello scaffale");
+		System.out.println("Inserisci l'indice dello scaffale di cui vuoi stampare i libri");
 		int scelta=scanner.nextInt();
+		scanner.nextLine();
 		System.out.println(listaScaffali.get(scelta).getListaLibri());
 	}
 	
@@ -215,19 +235,20 @@ static List<Scaffale> listaScaffali=new ArrayList<>();
 		int scaffale= scanner.nextInt();
 		scanner.nextLine();
 		System.out.println("Ecco la lista dei libri in questo scaffale, quale vuoi aggiornare?");
-		stampaLibri();
+		System.out.println(listaScaffali.get(scaffale).getListaLibri());
 		int libro=scanner.nextInt();
 		scanner.nextLine();
 		while(sceltaCorretta) {
 			System.out.println("Quale attributo del libro vuoi cambiare? 1.Titolo 2.Autore 3.Genere");
 			int scelta=scanner.nextInt();
+			scanner.nextLine();
 			if (scelta==1 || scelta==2 || scelta==3) {
 				sceltaCorretta=false;
 				if(scelta==1) {
-					System.out.println("Inserisci il nuovo autore");
+					System.out.println("Inserisci il nuovo titolo");
 					listaScaffali.get(scaffale).getListaLibri().get(libro).setTitolo(scanner.nextLine());
 				} else if (scelta==2){
-					System.out.println("Inserisci il nuovo titolo");
+					System.out.println("Inserisci il nuovo autore");
 					listaScaffali.get(scaffale).getListaLibri().get(libro).setAutore(scanner.nextLine());
 				} else {
 					Genere genere=null;
@@ -238,6 +259,7 @@ static List<Scaffale> listaScaffali=new ArrayList<>();
 							"4.THRILLER,\r\n"  
 							);
 					 scelta=scanner.nextInt();
+					 scanner.nextLine();
 					
 					switch (scelta) {
 					case 1: {
@@ -259,23 +281,29 @@ static List<Scaffale> listaScaffali=new ArrayList<>();
 					default:
 						break;
 					}
-					
 					listaScaffali.get(scaffale).getListaLibri().get(libro).setGenere(genere);
 				}
 			}
 		}
 	}
+	
+	
 	public static void rimuoviLibro() {
 		for(int i=0;i<listaScaffali.size();i++) {
 			System.out.println(i+"." + listaScaffali.get(i) );
-		}System.out.println("da quale scaffale vuoi rimuovere");
-		int scelta=scanner.nextInt();
-		for(int i=0;i<listaScaffali.get(scelta).getListaLibri().size();i++) {
-			System.out.println(i+"." + listaScaffali.get(scelta).getListaLibri() );
-		}System.out.println("quale libro vuoi rimuovere?");
-		scelta=scanner.nextInt();
-		listaScaffali.get(scelta).rimuoviLibro(listaScaffali.get(scelta).getListaLibri().get(scelta));
+		}System.out.println("Da quale scaffale vuoi rimuovere?");
+		int indiceScaffale=scanner.nextInt();
+		scanner.nextLine();
+		for(int i=0;i<listaScaffali.get(indiceScaffale).getListaLibri().size();i++) {
+			System.out.println(i+"." + listaScaffali.get(indiceScaffale).getListaLibri() );
+		}
+		System.out.println("Quale libro vuoi rimuovere?");
+		int indiceLibro=scanner.nextInt();
+		scanner.nextLine();
+		listaScaffali.get(indiceScaffale).getListaLibri().remove(indiceLibro);
+		System.out.println("Libro rimosso");
 	}
+	
 	
 	public static void salvaSuFile() {
 		try {
@@ -306,9 +334,6 @@ static List<Scaffale> listaScaffali=new ArrayList<>();
 			FileInputStream in = new FileInputStream(file);
 			ObjectInputStream stream = new ObjectInputStream(in);
 			listaScaffali = (List<Scaffale>) stream.readObject();
-			for (Scaffale scaffale : listaScaffali) {
-				System.out.println(scaffale);
-			}
 			stream.close();
 		} catch (IOException ext) {
 			System.out.println("Eccezione");
@@ -321,9 +346,6 @@ static List<Scaffale> listaScaffali=new ArrayList<>();
 			FileInputStream in = new FileInputStream(file);
 			ObjectInputStream stream = new ObjectInputStream(in);
 			listaLibri = (List<Libro>) stream.readObject();
-			for (Libro libro : listaLibri) {
-				System.out.println(libro);
-			}
 			stream.close();
 		} catch (IOException ext) {
 			System.out.println("Eccezione");
